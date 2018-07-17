@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import csv
-import urllib2
+import requests
 from datetime import date, timedelta, time, datetime
 from pytz import timezone
 
@@ -34,25 +34,25 @@ def getDailyCount():
     _tomorrow_dep = sumoftime(_tomorrow_time_dep, _tomorrow_cargo_dep)
     _tomorrow_land = sumoftime(_tomorrow_time_land, _tomorrow_cargo_land)
 
-    print _yesterday_sum
-    print _yesterday_dep
-    print _yesterday_land
+    print(_yesterday_sum)
+    print(_yesterday_dep)
+    print(_yesterday_land)
 
-    print _today_sum
-    print _today_dep
-    print _today_land
+    print(_today_sum)
+    print(_today_dep)
+    print(_today_land)
 
-    print _tomorrow_sum
-    print _tomorrow_dep
-    print _tomorrow_land
+    print(_tomorrow_sum)
+    print(_tomorrow_dep)
+    print(_tomorrow_land)
 
-    print _yesterday_count, _today_count, _tomorrow_count
-    print _yesterday_cargo_count, _today_cargo_count, _tomorrow_cargo_count
+    print(_yesterday_count, _today_count, _tomorrow_count)
+    print(_yesterday_cargo_count, _today_cargo_count, _tomorrow_cargo_count)
 
     _yesterday_total = _yesterday_count + _yesterday_cargo_count
     _today_total = _today_count + _today_cargo_count
     _tomorrow_total = _tomorrow_count + _tomorrow_cargo_count
-    print _yesterday_total, _today_total, _tomorrow_total
+    print(_yesterday_total, _today_total, _tomorrow_total)
 
     return (_yesterday_total, _today_total, _tomorrow_total,
             _yesterday_sum, _today_sum, _tomorrow_sum,
@@ -88,8 +88,10 @@ def wget(page):
     timestamp = datetime.now().strftime("%m_%d.%H_%M")
     filename = page + "." + timestamp
 
-    response = urllib2.urlopen('http://www.taoyuan-airport.com/uploads/flightx/'+page)
-    html = response.read()
+    # response = urllib2.urlopen('http://www.taoyuan-airport.com/uploads/flightx/'+page)
+    # html = response.read()
+    r = requests.get('http://www.taoyuan-airport.com/uploads/flightx/'+page)
+    html = r.text
     target = open(filename, 'w')
     target.write(html)
     return filename
@@ -181,7 +183,7 @@ def parse(filename, action=''):
         msg += actual_day + " " + actual_time + " "
         msg += dest + " "
         msg += status + " "
-        print msg
+        print(msg)
 
         last_time = actual_time
 
@@ -193,4 +195,4 @@ def parse(filename, action=''):
 
 if __name__ == '__main__':
     # getDailyCount()
-    getDate()
+    print(getDate())

@@ -29,9 +29,9 @@ if __name__ == '__main__':
     count = analysis.getDailyCount()
 
     msg, _yesterday, _today, _tomorrow = show(count)
-    print msg
+    print(msg)
 
     graph.plot(count, _yesterday, _today, _tomorrow)
 
-    FB.post_graph(_today, msg)
+    # FB.post_graph(_today, msg)
     # FB.post(msg)
